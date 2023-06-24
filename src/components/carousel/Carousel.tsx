@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import "./Carousel.scss";
 
@@ -13,18 +13,18 @@ import dayjs from "dayjs";
 
 import Img from "../lazyLoadImage/Img";
 
+import { useNavigate } from "react-router-dom";
 import PosterFallBack from "../../assets/no-poster.png";
 import { useSelector } from "../../store/store";
-import { useNavigate } from "react-router-dom";
-import ContentWrapper from "../contentWrapper/ContentWrapper";
 import CircleRating from "../circleRating/CircleRating";
+import ContentWrapper from "../contentWrapper/ContentWrapper";
 import Genres from "../genres/Genres";
 
 type props = {
   data: MovieType[] | undefined;
   loading: string | boolean | null;
   endpoint: string | undefined;
-  title: string;
+  title?: string;
 };
 const Carousel = ({ data, loading, endpoint, title }: props) => {
   const carouselContainer = useRef<HTMLDivElement>(null);

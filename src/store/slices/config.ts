@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { homeMovieType } from "../../@types/home";
 import fetchDataFromAPI from "../../utils/api";
 import { dispatch } from "../store";
 

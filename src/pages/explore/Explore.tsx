@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useParams } from "react-router-dom";
 import "./Explore.scss";
 
+import Select from "react-select";
+import { dataAPItype } from "../../@types/dataAPI";
+import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/movieCard/MovieCard";
 import Spinner from "../../components/spinner/Spinner";
 import useFetch from "../../hooks/useFetch";
 import fetchDataFromAPI from "../../utils/api";
-import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
-import Select from "react-select";
-import { dataAPItype } from "../../@types/dataAPI";
 
 type filtersType = {
   sort_by?: string;
@@ -42,7 +42,7 @@ const sortbyData: filterType[] = [
 ];
 
 const Explore = () => {
-  const [data, setData] = useState<dataAPItype>();
+  const [data, setData] = useState<dataAPItype | null>(null);
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [genre, setGenre] = useState<filterType | null>(null);
@@ -84,6 +84,7 @@ const Explore = () => {
     setSortby(null);
     setGenre(null);
     fetchInitialData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mediaType]);
 
   const onChange = (selectedItems: any, action: actionType) => {
@@ -99,7 +100,7 @@ const Explore = () => {
     if (action.name === "genres") {
       setGenre(selectedItems);
       if (action.action !== "clear") {
-        let genreId = selectedItems.map((g) => g.id);
+        let genreId = selectedItems.map((g: any) => g.id);
         genreId = JSON.stringify(genreId).slice(1, -1);
         filters.with_genres = genreId;
       } else {
